@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="left">
+            左侧
+        </div>
+        <div id="line"></div>
+        <div id="right">
+            右侧
+        </div>
+    </div>
+</body>
+<style>
+    body{
+        margin: 0;
+    }
+    .wrapper{
+        display: flex;
+        border: 1px solid #ccc;
+        position: relative;
+    }
+    #left{
+        width: 300px;
+        height: 200px;
+        margin-right: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+    #line{
+        position: absolute;
+        left: 300px;
+        border: 1px dashed rgb(128, 115, 115);
+        width: 5px;
+        height: 200px;
+    }
+</style>
+<script>
+    let leftNode = document.getElementById("left"),//左侧元素
+        lineNode = document.getElementById("line"),//线条元素
+        bodyNode = document.body,//body元素
+
+        lineMouseDownOffsetX = 0 //鼠标按下时位置距离元素左侧的距离
+
+    //移动中
+    let handleMouseMove = function (e) {
+        lineNode.style.left = e.x-lineMouseDownOffsetX+"px";
+    }
+    //鼠标按下
+    let handleMouseDown = function (e) {
+        lineMouseDownOffsetX = e.offsetX;
+        bodyNode.addEventListener("mousemove",handleMouseMove);
+    }
+    //鼠标抬起
+    let handleMouseUp = function (e) {
+        leftNode.style.width = e.x+"px";
+        bodyNode.removeEventListener("mousemove",handleMouseMove);
+    }
+    lineNode.addEventListener("mousedown",handleMouseDown)
+    bodyNode.addEventListener("mouseup",handleMouseUp)
+</script>
+</html>
